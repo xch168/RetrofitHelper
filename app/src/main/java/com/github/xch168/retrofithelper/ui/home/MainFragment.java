@@ -8,11 +8,13 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.github.xch168.retrofithelper.R;
+import com.github.xch168.retrofithelper.ui.BaseFragment;
+import com.github.xch168.retrofithelper.ui.home.data.GitHubData;
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class MainFragment extends Fragment implements MainPageContract.View {
+public class MainFragment extends BaseFragment implements MainPageContract.View {
 
     private MainPageContract.Presenter mPresenter;
 
@@ -32,5 +34,22 @@ public class MainFragment extends Fragment implements MainPageContract.View {
     @Override
     public void setPresenter(MainPageContract.Presenter presenter) {
         mPresenter = presenter;
+    }
+
+    public static MainFragment newInstance() {
+        return new MainFragment();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        mPresenter.listRepos();
+    }
+
+
+    @Override
+    public void showRepos(GitHubData data) {
+
     }
 }

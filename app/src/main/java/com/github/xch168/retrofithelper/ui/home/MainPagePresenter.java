@@ -15,15 +15,21 @@ import io.reactivex.schedulers.Schedulers;
 
 public class MainPagePresenter implements MainPageContract.Presenter {
 
+    private final MainPageContract.View mainPageView;
+
     private GitHubService mGitHubService;
 
-    public MainPagePresenter() {
+    public MainPagePresenter(MainPageContract.View mainPageView) {
+
+        this.mainPageView = mainPageView;
+        this.mainPageView.setPresenter(this);
 
         mGitHubService = RetrofitHelper.getService(GitHubService.class);
     }
 
-    public void listRepos() {
 
+    @Override
+    public void listRepos() {
         mGitHubService.listRepos("xch168")
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -35,7 +41,7 @@ public class MainPagePresenter implements MainPageContract.Presenter {
 
                     @Override
                     public void onNext(GitHubData gitHubData) {
-
+                        mainPageView.showRepos(gitHubData);
                     }
 
                     @Override
