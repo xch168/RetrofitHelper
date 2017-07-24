@@ -17,7 +17,7 @@ public class RetrofitHelper {
         synchronized (Retrofit.class) {
             if (retrofit == null) {
                 retrofit = new Retrofit.Builder()
-                        .baseUrl("")
+                        .baseUrl("http://gank.io/api/")
                         .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                         .addConverterFactory(GsonConverterFactory.create())
                         .build();
